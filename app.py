@@ -17,7 +17,7 @@ from linebot.models import (
     MessageEvent, TextSendMessage, TextMessage,
     CarouselColumn, URITemplateAction, TemplateSendMessage,
     CarouselTemplate, FollowEvent, MessageTemplateAction,
-    ButtonsTemplate
+    ButtonsTemplate, JoinEvent, LeaveEvent
 )
 
 from decouple import config
@@ -98,7 +98,7 @@ def getStories(event, keyword):
         result.append(column)
 
     carousel = TemplateSendMessage(
-        alt_text="Carousel",
+        alt_text="5 hasil teratas",
         template=CarouselTemplate(
             columns=result
         )
@@ -119,19 +119,29 @@ def getMenu():
 
     ])
     template_message = TemplateSendMessage(
-        alt_text='Buttons alt text', template=buttons_template)
+        alt_text='Menu', template=buttons_template)
 
     return template_message
 
 
-@handler.add(FollowEvent)
-def handle_follow(event):
+def greeting(event):
     line_bot_api.reply_message(
         event.reply_token, [
             TextSendMessage(
                 text='Hai! Aku adalah HackerNews bot \uDBC0\uDC8D'),
-            getMenu()
+            getMenu(),
+            TextSendMessage(text="Untuk berhenti, ketik '@hn bye'.")
         ])
+
+
+@handler.add(FollowEvent)
+def handle_follow(event):
+    greeting(event)
+
+
+@handler.add(JoinEvent)
+def handle_join(event):
+    greeting(event)
 
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -143,16 +153,17 @@ def handle_text_message(event):
     if message[0] == '@hn':
         if message[1] == 'best' or message[1] == 'new' or message[1] == 'job':
             keyword = message[1]
-            try:
-                line_bot_api.reply_message(
-                    event.reply_token, getStories(event, keyword))
-            except Exception:
-                line_bot_api.reply_message(
-                    event.reply_token, TextSendMessage(text="Terjadi kesalah. Silahkan coba beberapa saat lagi!"))
+            line_bot_api.reply_message(
+                event.reply_token, getStories(event, keyword))
 
         elif message[1] == 'menu':
             line_bot_api.reply_message(
                 event.reply_token, getMenu())
+
+        elif message[1] == 'bye':
+            line_bot_api.reply_message(
+                event.reply_token, TextMessage(text='Yaah... aku diusir \uDBC0\uDC92'))
+            line_bot_api.leave_group(event.source.group_id)
 
         else:
             line_bot_api.reply_message(
