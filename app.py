@@ -158,12 +158,19 @@ def handle_text_message(event):
 
         elif message[1] == 'menu':
             line_bot_api.reply_message(
-                event.reply_token, getMenu())
+                event.reply_token, [
+                    getMenu(),
+                    TextSendMessage(text="Untuk berhenti, ketik '@hn bye'.")
+                ])
 
         elif message[1] == 'bye':
-            line_bot_api.reply_message(
-                event.reply_token, TextMessage(text='Yaah... aku diusir \uDBC0\uDC92'))
-            line_bot_api.leave_group(event.source.group_id)
+            if event.source.type == 'group':
+                line_bot_api.reply_message(
+                    event.reply_token, TextMessage(text='Yaah... aku diusir \uDBC0\uDC92'))
+                line_bot_api.leave_group(event.source.group_id)
+            else:
+                line_bot_api.reply_message(
+                    event.reply_token, TextMessage(text='Sorry, pesan itu cuma bisa dipake kalo aku di dalem grup.'))
 
         else:
             line_bot_api.reply_message(
