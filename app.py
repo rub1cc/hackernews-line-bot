@@ -1,6 +1,5 @@
 import os
 import requests
-import json
 
 from flask import (
     Flask, request, abort
@@ -175,6 +174,9 @@ def handle_text_message(event):
         else:
             line_bot_api.reply_message(
                 event.reply_token, TextSendMessage(text="Ketik '@hn menu' untuk melihat menu. "))
+    else:
+        line_bot_api.reply_message(
+            event.reply_token, TextSendMessage(text="Ketik '@hn menu' untuk melihat menu. "))
 
 
 if __name__ == "__main__":
