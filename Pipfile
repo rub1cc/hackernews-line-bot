@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+"flake8" = "*"
+"autopep8" = "*"
+
+[packages]
+line-bot-sdk = "*"
+flask = "*"
+python-decouple = "*"
+
+[requires]
+python_version = "3.6"
