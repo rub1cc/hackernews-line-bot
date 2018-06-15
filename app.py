@@ -167,16 +167,21 @@ def handle_text_message(event):
                 line_bot_api.reply_message(
                     event.reply_token, TextMessage(text='Yaah... aku diusir \uDBC0\uDC92'))
                 line_bot_api.leave_group(event.source.group_id)
+            elif event.source.type == 'room':
+                line_bot_api.reply_message(
+                    event.reply_token, TextMessage(text='Yaah... aku diusir \uDBC0\uDC92'))
+                line_bot_api.leave_group(event.source.room_id)
             else:
                 line_bot_api.reply_message(
-                    event.reply_token, TextMessage(text='Sorry, pesan itu cuma bisa dipake kalo aku di dalem grup.'))
+                    event.reply_token, TextMessage(text='Sorry, aku gabisa keluar dari 1:1 chat.'))
 
         else:
             line_bot_api.reply_message(
                 event.reply_token, TextSendMessage(text="Ketik '@hn menu' untuk melihat menu. "))
     else:
-        line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text="Ketik '@hn menu' untuk melihat menu. "))
+        if event.source.type == 'user':
+            line_bot_api.reply_message(
+                event.reply_token, TextSendMessage(text="Ketik '@hn menu' untuk melihat menu. "))
 
 
 if __name__ == "__main__":
