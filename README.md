@@ -1,4 +1,4 @@
-![](https://i.imgur.com/0Cz7LyB.png)
+![HackerNews UI](https://i.imgur.com/0Cz7LyB.png)
 
 # HackerNews LINE Bot
 > An unofficial HackerNews Bot using LINE Messaging API and Flask
@@ -12,6 +12,12 @@
 ## Techs
 - [LINE Messaging API](https://developers.line.me/en/docs/messaging-api/overview/)
 - [Flask](http://flask.pocoo.org/)
+
+## Try it now 
+![QR Code](./qr.png "Scan QR Code")
+
+[![](https://i.imgur.com/KivqqRG.jpg)](https://line.me/R/ti/p/%40dnx5958i "Tambah teman")
+
 
 ## License
 This project is published under the [MIT License](https://github.com/farazaulia/hackernews-line-bot/blob/master/LICENSE).
