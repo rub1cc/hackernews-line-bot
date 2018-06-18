@@ -2,7 +2,8 @@ import os
 import requests
 
 from flask import (
-    Flask, request, abort
+    Flask, request, abort,
+    redirect
 )
 
 from linebot import (
@@ -31,6 +32,11 @@ handler = WebhookHandler(
     config(
         "LINE_CHANNEL_SECRET", default=os.environ.get('LINE_CHANNEL_SECRET'))
 )
+
+
+@app.route('/add', methods=['GET'])
+def addFriend():
+    return redirect('https://line.me/R/ti/p/@dnx5958i')
 
 
 @app.route("/callback", methods=['POST'])
